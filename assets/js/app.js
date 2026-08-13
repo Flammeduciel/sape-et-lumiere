@@ -30,14 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
   }
 
-  const countdownInterval = setInterval(updateCountdown, 1000);
-  updateCountdown();
-
   function showStartedLabel() {
     const inner = document.querySelector('.countdown-inner');
-    if (inner && !document.querySelector('.countdown-finished')) {
-      inner.insertAdjacentHTML('beforeend', `<span class="countdown-finished">${FESTIVAL.dates.startedLabel}</span>`);
+    if (inner) {
+      inner.innerHTML = `<span class="countdown-finished">${FESTIVAL.dates.startedLabel}</span>`;
     }
   }
+
+  updateCountdown();
+  const countdownInterval = setInterval(updateCountdown, 1000);
 
 });
