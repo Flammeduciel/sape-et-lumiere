@@ -107,7 +107,9 @@ const FESTIVAL = {
     { name: "Akieni Academy", image: "assets/images/parteners/akieni.jpeg" },
     { name: "Airtel Congo", image: "assets/images/parteners/airtel.jpeg" },
     { name: "MTN Congo", image: "assets/images/parteners/mtn.jpeg" },
-    { name: "Canal+", image: "assets/images/parteners/canal_plus.jpeg" }
+    { name: "Canal+", image: "assets/images/parteners/canal_plus.jpeg" },
+    { name: "TotalEnergies", image: "assets/images/parteners/total.svg" },
+    { name: "ENI Congo", image: "assets/images/parteners/eni_congo.jpg" }
   ],
 
   faq: [
