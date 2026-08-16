@@ -101,5 +101,14 @@ const FESTIVAL = {
       { icon: "restaurant", label: "Restauration", text: "Stands de restauration locale et internationale sur place" },
       { icon: "confirmation_number", label: "Réservation", text: "Pass uniquement via WhatsApp : 06 000 00 00" }
     ]
-  }
+  },
+
+  partenaires: [
+    { name: "Akieni Academy", image: "https://picsum.photos/seed/akieni-academy/400/200" },
+    { name: "TotalEnergies Congo", image: "https://picsum.photos/seed/total-congo/400/200" },
+    { name: "Airtel Congo", image: "https://picsum.photos/seed/airtel-congo/400/200" },
+    { name: "MTN Congo", image: "https://picsum.photos/seed/mtn-congo/400/200" },
+    { name: "Canal+", image: "https://picsum.photos/seed/canal-plus/400/200" },
+    { name: "Palais des Congrès", image: "https://picsum.photos/seed/palais-congres/400/200" }
+  ]
 };
