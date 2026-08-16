@@ -104,12 +104,10 @@ const FESTIVAL = {
   },
 
   partenaires: [
-    { name: "Akieni Academy", image: "https://picsum.photos/seed/akieni-academy/400/200" },
-    { name: "TotalEnergies Congo", image: "https://picsum.photos/seed/total-congo/400/200" },
-    { name: "Airtel Congo", image: "https://picsum.photos/seed/airtel-congo/400/200" },
-    { name: "MTN Congo", image: "https://picsum.photos/seed/mtn-congo/400/200" },
-    { name: "Canal+", image: "https://picsum.photos/seed/canal-plus/400/200" },
-    { name: "Palais des Congrès", image: "https://picsum.photos/seed/palais-congres/400/200" }
+    { name: "Akieni Academy", image: "assets/images/parteners/akieni.jpeg" },
+    { name: "Airtel Congo", image: "assets/images/parteners/airtel.jpeg" },
+    { name: "MTN Congo", image: "assets/images/parteners/mtn.jpeg" },
+    { name: "Canal+", image: "assets/images/parteners/canal_plus.jpeg" }
   ],
 
   faq: [
