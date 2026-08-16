@@ -88,5 +88,18 @@ const FESTIVAL = {
       "Expérience inoubliable"
     ],
     whatsappMessage: (passName) => `Bonjour, je souhaite réserver un ${passName} pour le Festival Sape & Lumière. Merci !`
+  },
+
+  pratique: {
+    title: "INFORMATIONS PRATIQUES",
+    subtitle: "Préparez votre venue au festival",
+    items: [
+      { icon: "location_on", label: "Lieu", text: "Esplanade du Palais des Congrès, Brazzaville" },
+      { icon: "schedule", label: "Horaires", text: "Ouverture des portes dès 18h00, du vendredi au dimanche" },
+      { icon: "directions_bus", label: "Accès", text: "À 10 minutes du centre-ville, lignes de bus 2, 5 et 12" },
+      { icon: "local_parking", label: "Parking", text: "Parking sécurisé et gratuit près de l'entrée" },
+      { icon: "restaurant", label: "Restauration", text: "Stands de restauration locale et internationale sur place" },
+      { icon: "confirmation_number", label: "Réservation", text: "Pass uniquement via WhatsApp : 06 000 00 00" }
+    ]
   }
 };

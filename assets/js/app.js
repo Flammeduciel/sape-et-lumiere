@@ -123,6 +123,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     RENDER INFOS PRATIQUES
+     ═══════════════════════════════════════ */
+
+  function renderPratique() {
+    const grid = document.getElementById('pratique-grid');
+    if (!grid) return;
+
+    grid.innerHTML = FESTIVAL.pratique.items.map(item => `
+      <div class="pratique-card">
+        <span class="material-symbols-outlined pratique-icon">${item.icon}</span>
+        <h3 class="pratique-label">${item.label}</h3>
+        <p class="pratique-text">${item.text}</p>
+      </div>
+    `).join('');
+  }
+
+  /* ═══════════════════════════════════════
      ARTIST MODAL
      ═══════════════════════════════════════ */
 
@@ -252,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProgramme();
   renderArtists();
   renderBilletterie();
+  renderPratique();
   initHeroButtons();
 
 });
