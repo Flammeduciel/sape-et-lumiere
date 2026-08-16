@@ -7,9 +7,9 @@ const FESTIVAL = {
     startedLabel: "LE FESTIVAL A COMMENCÉ !",
     label: "DU 18 AU 20 SEPTEMBRE 2026",
     days: [
-      { label: "VENDREDI 18 SEPTEMBRE", value: "vendredi", image: "https://picsum.photos/seed/festival-vendredi/800/600" },
-      { label: "SAMEDI 19 SEPTEMBRE", value: "samedi", image: "https://picsum.photos/seed/festival-samedi/800/600" },
-      { label: "DIMANCHE 20 SEPTEMBRE", value: "dimanche", image: "https://picsum.photos/seed/festival-dimanche/800/600" }
+      { label: "VENDREDI 18 SEPTEMBRE", value: "vendredi", image: "assets/images/days/vendredi.jpeg" },
+      { label: "SAMEDI 19 SEPTEMBRE", value: "samedi", image: "assets/images/days/samedi.jpeg" },
+      { label: "DIMANCHE 20 SEPTEMBRE", value: "dimanche", image: "assets/images/days/dimanche.jpeg" }
     ]
   },
 
