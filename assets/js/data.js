@@ -41,5 +41,24 @@ const FESTIVAL = {
       { time: "18:00-19:30", title: "Concert de Clôture", icon: "celebration", desc: "La grande finale musicale" },
       { time: "19:30-21:00", title: "Spectacle Lumière Finale", icon: "auto_awesome", desc: "Clôture magique avec feux d'artifice" }
     ]
-  }
+  },
+
+  categories: [
+    { label: "TOUS", value: "tous" },
+    { label: "MUSIQUE", value: "musique" },
+    { label: "MODE & SAPE", value: "mode" },
+    { label: "ART LUMIÈRE", value: "art" }
+  ],
+
+  artists: [
+    { name: "Kévin Mavungu", discipline: "Chant, Afrobeat", category: "musique", image: "https://picsum.photos/seed/kevin-mavungu/400/400" },
+    { name: "Maya Nsimba", discipline: "Chant, Soul & R&B", category: "musique", image: "https://picsum.photos/seed/maya-nsimba/400/400" },
+    { name: "Darel Kossa", discipline: "DJ, Afro-house", category: "musique", image: "https://picsum.photos/seed/darel-kossa/400/400" },
+    { name: "Léna Mpassi", discipline: "Stylisme, Haute couture", category: "mode", image: "https://picsum.photos/seed/lena-mpassi/400/400" },
+    { name: "Chris Banzouzi", discipline: "Stylisme, Sape", category: "mode", image: "https://picsum.photos/seed/chris-banzouzi/400/400" },
+    { name: "Noah Makosso", discipline: "Design vestimentaire", category: "mode", image: "https://picsum.photos/seed/noah-makosso/400/400" },
+    { name: "Élodie Ngalula", discipline: "Installation lumineuse", category: "art", image: "https://picsum.photos/seed/elodie-ngalula/400/400" },
+    { name: "Marc Elonga", discipline: "Art numérique", category: "art", image: "https://picsum.photos/seed/marc-elonga/400/400" },
+    { name: "Sarah Mouzinga", discipline: "Sculpture lumineuse", category: "art", image: "https://picsum.photos/seed/sarah-mouzinga/400/400" }
+  ]
 };
