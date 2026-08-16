@@ -193,6 +193,77 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     CONTACT FORM VALIDATION
+     ═══════════════════════════════════════ */
+
+  function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const nameInput = document.getElementById('contact-name');
+    const phoneInput = document.getElementById('contact-phone');
+    const messageInput = document.getElementById('contact-message');
+    const errorName = document.getElementById('error-name');
+    const errorPhone = document.getElementById('error-phone');
+    const errorMessage = document.getElementById('error-message');
+    const success = document.getElementById('form-success');
+
+    function setError(el, msg) {
+      el.textContent = msg;
+      el.classList.toggle('visible', Boolean(msg));
+    }
+
+    function validateField(input, errorEl, rule) {
+      const result = rule(input.value.trim());
+      if (!result.valid) {
+        setError(errorEl, result.message);
+        input.classList.add('invalid');
+        return false;
+      }
+      setError(errorEl, '');
+      input.classList.remove('invalid');
+      return true;
+    }
+
+    const isNotEmpty = value => value.length > 0
+      ? { valid: true }
+      : { valid: false, message: 'Ce champ est obligatoire.' };
+
+    const isPhoneValid = value => {
+      const cleaned = value.replace(/[\s.\-()]/g, '');
+      const phoneOk = /^\+?\d{8,15}$/.test(cleaned);
+      if (value.length === 0) return { valid: false, message: 'Ce champ est obligatoire.' };
+      if (!phoneOk) return { valid: false, message: 'Numéro de téléphone invalide.' };
+      return { valid: true };
+    };
+
+    const isMessageValid = value => {
+      if (value.length === 0) return { valid: false, message: 'Ce champ est obligatoire.' };
+      if (value.length < 10) return { valid: false, message: 'Votre message doit contenir au moins 10 caractères.' };
+      return { valid: true };
+    };
+
+    // Live validation
+    nameInput.addEventListener('blur', () => validateField(nameInput, errorName, isNotEmpty));
+    phoneInput.addEventListener('blur', () => validateField(phoneInput, errorPhone, isPhoneValid));
+    messageInput.addEventListener('blur', () => validateField(messageInput, errorMessage, isMessageValid));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const okName = validateField(nameInput, errorName, isNotEmpty);
+      const okPhone = validateField(phoneInput, errorPhone, isPhoneValid);
+      const okMessage = validateField(messageInput, errorMessage, isMessageValid);
+
+      if (okName && okPhone && okMessage) {
+        success.hidden = false;
+        form.reset();
+        [nameInput, phoneInput, messageInput].forEach(i => i.classList.remove('invalid'));
+      }
+    });
+  }
+
+  /* ═══════════════════════════════════════
      ARTIST MODAL
      ═══════════════════════════════════════ */
 
@@ -325,6 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPratique();
   renderPartenaires();
   renderFaq();
+  initContactForm();
   initHeroButtons();
 
 });
