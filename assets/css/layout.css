@@ -726,6 +726,13 @@
   display: block;
 }
 
+.ticket-details {
+  color: var(--festival-gray);
+  font-size: var(--fs-label-md);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
 .ticket-price.green { color: var(--festival-green-dark); }
 .ticket-price.red { color: var(--festival-red); }
 
