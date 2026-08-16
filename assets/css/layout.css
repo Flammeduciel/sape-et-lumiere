@@ -663,6 +663,62 @@
 }
 
 /* ═══════════════════════════════════════
+   INFOS PRATIQUES
+   ═══════════════════════════════════════ */
+.infos-pratiques {
+  background: var(--festival-cream);
+}
+
+.pratique-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.pratique-card {
+  background: white;
+  border: 1px solid #f3f4f6;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.pratique-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.pratique-icon {
+  color: var(--festival-green-dark);
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.pratique-label {
+  font-family: var(--font-headline);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--festival-black);
+  margin-bottom: 0.5rem;
+}
+
+.pratique-text {
+  color: var(--festival-gray);
+  font-size: var(--fs-body-md);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .pratique-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════
    BILLETTERIE
    ═══════════════════════════════════════ */
 .billetterie {
