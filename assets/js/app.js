@@ -155,6 +155,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     RENDER FAQ
+     ═══════════════════════════════════════ */
+
+  function renderFaq() {
+    const list = document.getElementById('faq-list');
+    if (!list) return;
+
+    list.innerHTML = FESTIVAL.faq.map((q, i) => `
+      <div class="faq-item" data-index="${i}">
+        <div class="faq-item-row">
+          <div class="faq-item-content">
+            <span class="material-symbols-outlined faq-icon">${q.icon}</span>
+            <span style="font-weight:500;font-size:var(--fs-label-md);">${q.question}</span>
+          </div>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>${q.answer}</p>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const isOpen = item.classList.contains('active');
+        list.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-plus').textContent = '+';
+        });
+        if (!isOpen) {
+          item.classList.add('active');
+          item.querySelector('.faq-plus').textContent = '−';
+        }
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════
      ARTIST MODAL
      ═══════════════════════════════════════ */
 
@@ -286,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBilletterie();
   renderPratique();
   renderPartenaires();
+  renderFaq();
   initHeroButtons();
 
 });

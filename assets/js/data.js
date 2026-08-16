@@ -110,5 +110,12 @@ const FESTIVAL = {
     { name: "MTN Congo", image: "https://picsum.photos/seed/mtn-congo/400/200" },
     { name: "Canal+", image: "https://picsum.photos/seed/canal-plus/400/200" },
     { name: "Palais des Congrès", image: "https://picsum.photos/seed/palais-congres/400/200" }
+  ],
+
+  faq: [
+    { icon: "help", question: "Y a-t-il un âge minimum pour participer ?", answer: "Le festival est accessible à tous les âges. Les mineurs doivent toutefois être accompagnés d'un adulte." },
+    { icon: "directions_car", question: "Y a-t-il un parking disponible ?", answer: "Oui, un parking sécurisé et gratuit est mis à disposition des festivaliers près de l'entrée." },
+    { icon: "restaurant", question: "Peut-on se restaurer sur place ?", answer: "Absolument ! De nombreux stands de restauration locale et internationale seront présents sur le site." },
+    { icon: "umbrella", question: "Le festival se déroule-t-il en intérieur ou en extérieur en cas de pluie ?", answer: "Le festival est maintenu en cas de pluie. Des zones couvertes sont prévues sur l'ensemble du site." }
   ]
 };
