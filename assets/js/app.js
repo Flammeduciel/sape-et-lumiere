@@ -226,11 +226,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const countdownInterval = setInterval(updateCountdown, 1000);
 
   /* ═══════════════════════════════════════
+     HERO CTA BUTTONS
+     ═══════════════════════════════════════ */
+
+  function initHeroButtons() {
+    const btnProgramme = document.getElementById('hero-btn-programme');
+    const btnWhatsapp = document.getElementById('hero-btn-whatsapp');
+    if (!btnProgramme || !btnWhatsapp) return;
+
+    btnProgramme.addEventListener('click', () => {
+      document.getElementById('programme').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    btnWhatsapp.addEventListener('click', () => {
+      const msg = FESTIVAL.billetterie.whatsappMessage("Pass");
+      const url = `https://wa.me/${FESTIVAL.billetterie.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    });
+  }
+
+  /* ═══════════════════════════════════════
      INIT
      ═══════════════════════════════════════ */
 
   renderProgramme();
   renderArtists();
   renderBilletterie();
+  initHeroButtons();
 
 });
