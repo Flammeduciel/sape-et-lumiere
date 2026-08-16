@@ -367,6 +367,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const countdownInterval = setInterval(updateCountdown, 1000);
 
   /* ═══════════════════════════════════════
+     NAV + DRAWER (MENU MOBILE)
+     ═══════════════════════════════════════ */
+
+  function initNav() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const drawerClose = document.getElementById('drawer-close');
+
+    if (!hamburger || !drawer || !overlay || !drawerClose) return;
+
+    function openDrawer() {
+      drawer.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    drawer.querySelectorAll('.drawer-links a').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+  }
+
+  /* ═══════════════════════════════════════
      HERO CTA BUTTONS
      ═══════════════════════════════════════ */
 
@@ -398,5 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFaq();
   initContactForm();
   initHeroButtons();
+  initNav();
 
 });
