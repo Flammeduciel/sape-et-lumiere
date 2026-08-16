@@ -66,14 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
         : FESTIVAL.artists.filter(a => a.category === cat);
 
       grid.innerHTML = list.map(a => `
-        <div class="artist-card">
+        <article class="artist-card" data-artist="${a.name}" tabindex="0" role="button" aria-label="Voir la fiche de ${a.name}">
           <div class="artist-card-img">
             <img src="${a.image}" alt="${a.name}"/>
           </div>
           <h4 class="artist-name">${a.name}</h4>
           <span class="artist-category">${FESTIVAL.categories.find(c => c.value === a.category)?.label || a.category}</span>
-        </div>
+        </article>
       `).join('');
+
+      // Click/Enter sur carte → ouvrir modal
+      grid.querySelectorAll('.artist-card').forEach(card => {
+        card.addEventListener('click', () => openArtistModal(card.dataset.artist));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openArtistModal(card.dataset.artist); });
+      });
     }
 
     loadArtists('tous');
@@ -86,6 +92,69 @@ document.addEventListener('DOMContentLoaded', () => {
       loadArtists(btn.dataset.cat);
     });
   }
+
+  /* ═══════════════════════════════════════
+     ARTIST MODAL
+     ═══════════════════════════════════════ */
+
+  const modalOverlay = document.getElementById('artist-modal-overlay');
+  const modal = document.getElementById('artist-modal');
+  const modalClose = document.getElementById('artist-modal-close');
+
+  function openArtistModal(name) {
+    const artist = FESTIVAL.artists.find(a => a.name === name);
+    if (!artist) return;
+
+    const catLabel = FESTIVAL.categories.find(c => c.value === artist.category)?.label || artist.category;
+
+    document.getElementById('artist-modal-img').style.backgroundImage = `url(${artist.image})`;
+    document.getElementById('artist-modal-category').textContent = catLabel;
+    document.getElementById('artist-modal-title').textContent = artist.name;
+    document.getElementById('artist-modal-discipline').textContent = artist.discipline;
+    document.getElementById('artist-modal-bio').textContent = artist.bio;
+
+    // Social links
+    const socialEl = document.getElementById('artist-modal-social');
+    if (artist.social) {
+      socialEl.innerHTML = Object.entries(artist.social).map(([platform, url]) =>
+        `<a href="${url}" target="_blank" rel="noopener" class="artist-social-link" aria-label="${platform}">
+          <span class="material-symbols-outlined">${getSocialIcon(platform)}</span>
+        </a>`
+      ).join('');
+    } else {
+      socialEl.innerHTML = '';
+    }
+
+    modal.classList.add('active');
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  }
+
+  function closeArtistModal() {
+    modal.classList.remove('active');
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function getSocialIcon(platform) {
+    const icons = {
+      instagram: 'photo_camera',
+      youtube: 'play_circle',
+      spotify: 'music_note',
+      soundcloud: 'cloud',
+      mixcloud: 'cloud',
+      website: 'language',
+      behance: 'palette',
+      github: 'code',
+      linkedin: 'badge'
+    };
+    return icons[platform] || 'link';
+  }
+
+  modalClose.addEventListener('click', closeArtistModal);
+  modalOverlay.addEventListener('click', closeArtistModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('active')) closeArtistModal(); });
 
   /* ═══════════════════════════════════════
      COUNTDOWN
