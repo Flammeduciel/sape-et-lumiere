@@ -47,6 +47,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     RENDER ARTISTS (LINE-UP)
+     ═══════════════════════════════════════ */
+
+  function renderArtists() {
+    const filters = document.getElementById('artist-filters');
+    const grid = document.getElementById('artists-grid');
+
+    if (!filters || !grid) return;
+
+    filters.innerHTML = FESTIVAL.categories.map((c, i) =>
+      `<button class="artist-filter${i === 0 ? ' active' : ''}" data-cat="${c.value}">${c.label}</button>`
+    ).join('');
+
+    function loadArtists(cat) {
+      const list = cat === 'tous'
+        ? FESTIVAL.artists
+        : FESTIVAL.artists.filter(a => a.category === cat);
+
+      grid.innerHTML = list.map(a => `
+        <div class="artist-card">
+          <div class="artist-card-img">
+            <img src="${a.image}" alt="${a.name}"/>
+          </div>
+          <h4 class="artist-name">${a.name}</h4>
+          <span class="artist-category">${FESTIVAL.categories.find(c => c.value === a.category)?.label || a.category}</span>
+        </div>
+      `).join('');
+    }
+
+    loadArtists('tous');
+
+    filters.addEventListener('click', e => {
+      const btn = e.target.closest('.artist-filter');
+      if (!btn) return;
+      filters.querySelectorAll('.artist-filter').forEach(f => f.classList.remove('active'));
+      btn.classList.add('active');
+      loadArtists(btn.dataset.cat);
+    });
+  }
+
+  /* ═══════════════════════════════════════
      COUNTDOWN
      ═══════════════════════════════════════ */
 
@@ -91,5 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
      ═══════════════════════════════════════ */
 
   renderProgramme();
+  renderArtists();
 
 });
