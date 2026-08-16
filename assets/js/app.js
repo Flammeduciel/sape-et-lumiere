@@ -140,6 +140,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     RENDER PARTENAIRES
+     ═══════════════════════════════════════ */
+
+  function renderPartenaires() {
+    const grid = document.getElementById('partners-grid');
+    if (!grid) return;
+
+    grid.innerHTML = FESTIVAL.partenaires.map(p => `
+      <div class="partner-item" title="${p.name}">
+        <img src="${p.image}" alt="Logo ${p.name}"/>
+      </div>
+    `).join('');
+  }
+
+  /* ═══════════════════════════════════════
      ARTIST MODAL
      ═══════════════════════════════════════ */
 
@@ -270,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderArtists();
   renderBilletterie();
   renderPratique();
+  renderPartenaires();
   initHeroButtons();
 
 });
