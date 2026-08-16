@@ -60,5 +60,33 @@ const FESTIVAL = {
     { name: "Élodie Ngalula", discipline: "Installation lumineuse", category: "art", image: "https://picsum.photos/seed/elodie-ngalula/400/400", bio: "Artiste lumière formée à l'École des Beaux-Arts de Kinshasa, Élodie crée des environnements immersifs où la lumière sculpte l'espace. Son travail questionne la perception.", social: { instagram: "#", website: "#" } },
     { name: "Marc Elonga", discipline: "Art numérique", category: "art", image: "https://picsum.photos/seed/marc-elonga/400/400", bio: "Pionnier du digital art en Afrique centrale, Marc Elonga code des génératifs visuels projetés sur l'architecture urbaine. Ses algorithmes dansent au rythme du ndombolo.", social: { instagram: "#", github: "#", website: "#" } },
     { name: "Sarah Mouzinga", discipline: "Sculpture lumineuse", category: "art", image: "https://picsum.photos/seed/sarah-mouzinga/400/400", bio: "Sculptrice de lumière, Sarah Mouzinga travaille le néon, la fibre optique et le verre. Ses installations 'Âmes brillantes' illuminent les nuits de Brazzaville depuis 2022.", social: { instagram: "#", website: "#" } }
-  ]
+  ],
+
+  billetterie: {
+    whatsappNumber: "242060000000",
+    info: "Paiement et réservation uniquement via WhatsApp.",
+    tickets: [
+      {
+        id: "pass-1jour",
+        name: "PASS 1 JOUR",
+        price: "5 000 FCFA",
+        details: "Accès à toutes les activités du jour sélectionné.",
+        popular: false
+      },
+      {
+        id: "pass-3jours",
+        name: "PASS 3 JOURS",
+        price: "12 000 FCFA",
+        details: "Accès aux 3 jours de festival, toutes les activités.",
+        popular: true
+      }
+    ],
+    features: [
+      "Accès à toutes les activités",
+      "Ambiance exceptionnelle",
+      "Sécurité garantie",
+      "Expérience inoubliable"
+    ],
+    whatsappMessage: (passName) => `Bonjour, je souhaite réserver un ${passName} pour le Festival Sape & Lumière. Merci !`
+  }
 };

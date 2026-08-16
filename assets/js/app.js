@@ -94,6 +94,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
+     RENDER BILLETTERIE
+     ═══════════════════════════════════════ */
+
+  function renderBilletterie() {
+    const grid = document.getElementById('tickets-grid');
+    const featuresEl = document.getElementById('billetterie-features');
+    if (!grid || !featuresEl) return;
+
+    grid.innerHTML = FESTIVAL.billetterie.tickets.map(t => {
+      const waUrl = `https://wa.me/${FESTIVAL.billetterie.whatsappNumber}?text=${encodeURIComponent(FESTIVAL.billetterie.whatsappMessage(t.name))}`;
+      return `
+        <div class="card-ticket${t.popular ? ' popular' : ''}">
+          <h3 class="ticket-title">${t.name}</h3>
+          <span class="ticket-price ${t.popular ? 'red' : 'green'}">${t.price}</span>
+          <p class="ticket-details">${t.details}</p>
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn ${t.popular ? 'btn-whatsapp' : 'btn-black'}">RÉSERVER VIA WHATSAPP</a>
+        </div>
+      `;
+    }).join('');
+
+    featuresEl.innerHTML = FESTIVAL.billetterie.features.map(f => `
+      <div class="billetterie-feature">
+        <span class="material-symbols-outlined billetterie-feature-icon">check</span>
+        <span class="billetterie-feature-text">${f}</span>
+      </div>
+    `).join('');
+  }
+
+  /* ═══════════════════════════════════════
      ARTIST MODAL
      ═══════════════════════════════════════ */
 
@@ -202,5 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderProgramme();
   renderArtists();
+  renderBilletterie();
 
 });
