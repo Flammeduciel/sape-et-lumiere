@@ -144,7 +144,7 @@
   </div>
 </section>
 
-<!-- ═══════════════ FAQ ═══════════════ -->
+<!-- ═══════════════ FAQ + CONTACT ═══════════════ -->
 <div class="faq-contact" id="faq">
   <div class="faq-section">
     <div class="faq-section-header">
@@ -152,6 +152,34 @@
       <p class="faq-section-subtitle">Réponses aux questions fréquentes</p>
     </div>
     <div class="faq-list" id="faq-list"></div>
+  </div>
+
+  <div class="contact-section" id="contact">
+    <div class="contact-section-header">
+      <h2 class="contact-section-title">CONTACT</h2>
+      <p class="contact-section-subtitle">Une question ? Écrivez-nous</p>
+    </div>
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="contact-form-row">
+        <div class="contact-field">
+          <input class="form-input" type="text" id="contact-name" name="name" placeholder="Nom complet *" required/>
+          <span class="form-error" id="error-name"></span>
+        </div>
+        <div class="contact-field">
+          <input class="form-input" type="tel" id="contact-phone" name="phone" placeholder="Téléphone *" required/>
+          <span class="form-error" id="error-phone"></span>
+        </div>
+      </div>
+      <div class="contact-field">
+        <textarea class="form-input" id="contact-message" name="message" placeholder="Message *" required></textarea>
+        <span class="form-error" id="error-message"></span>
+      </div>
+      <button class="form-submit" type="submit">
+        <span class="material-symbols-outlined" style="font-size:18px;">send</span>
+        ENVOYER LE MESSAGE
+      </button>
+      <p class="form-success" id="form-success" hidden>Merci ! Votre message a bien été pris en compte.</p>
+    </form>
   </div>
 </div>
 

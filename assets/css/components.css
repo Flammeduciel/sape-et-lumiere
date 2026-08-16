@@ -440,6 +440,43 @@ textarea.form-input {
   background: white;
 }
 
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form .contact-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input.invalid {
+  border-color: #ffb4ab;
+}
+
+.form-error {
+  color: #ffb4ab;
+  font-size: 0.75rem;
+  min-height: 1rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.form-error.visible {
+  display: block;
+}
+
+.form-success {
+  color: #ffffff;
+  background: rgba(0, 180, 90, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.85rem;
+  font-size: var(--fs-body-md);
+  font-weight: 500;
+  text-align: center;
+}
+
 /* ── FAQ Item ── */
 .faq-item {
   border: 1px solid rgba(255, 255, 255, 0.2);
