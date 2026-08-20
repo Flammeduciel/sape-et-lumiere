@@ -1,0 +1,29 @@
+{
+  "name": "sape-et-lumiere",
+  "version": "1.0.0",
+  "description": "Site vitrine du **Festival Sape & Lumière**, événement culturel annuel organisé à **Brazzaville** et consacré en trois jours à l'élégance de la Sape congolaise, à la musique live et aux installations d'art lumineux dans l'espace public.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flammeduciel/sape-et-lumiere.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flammeduciel/sape-et-lumiere/issues"
+  },
+  "homepage": "https://github.com/Flammeduciel/sape-et-lumiere#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0"
+  }
+}

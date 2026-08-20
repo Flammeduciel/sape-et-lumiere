@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Sape & Lumière</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="login-page">
+  <div class="login-card">
+    <h1>SAPE & LUMIÈRE</h1>
+    <p>Dashboard Admin</p>
+    <form id="login-form">
+      <input class="form-input" type="text" id="login-username" placeholder="Nom d'utilisateur" required/>
+      <input class="form-input" type="password" id="login-password" placeholder="Mot de passe" required/>
+      <button class="btn btn-primary" type="submit">SE CONNECTER</button>
+      <span class="login-error" id="login-error"></span>
+    </form>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard" style="display:none;">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined sidebar-logo">auto_awesome</span>
+      <span class="sidebar-title">S&amp;L ADMIN</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-link active" data-page="stats" href="#">
+        <span class="material-symbols-outlined">dashboard</span> Stats
+      </a>
+      <a class="sidebar-link" data-page="programme" href="#">
+        <span class="material-symbols-outlined">event</span> Programme
+      </a>
+      <a class="sidebar-link" data-page="artists" href="#">
+        <span class="material-symbols-outlined">group</span> Artistes
+      </a>
+      <a class="sidebar-link" data-page="tickets" href="#">
+        <span class="material-symbols-outlined">confirmation_number</span> Billetterie
+      </a>
+      <a class="sidebar-link" data-page="contacts" href="#">
+        <span class="material-symbols-outlined">mail</span> Messages
+      </a>
+      <a class="sidebar-link" data-page="partners" href="#">
+        <span class="material-symbols-outlined">handshake</span> Partenaires
+      </a>
+      <a class="sidebar-link" data-page="faq" href="#">
+        <span class="material-symbols-outlined">help</span> FAQ
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-link" href="/" target="_blank">
+        <span class="material-symbols-outlined">open_in_new</span> Voir le site
+      </a>
+      <a class="sidebar-link" id="logout-btn" href="#">
+        <span class="material-symbols-outlined">logout</span> Déconnexion
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger-btn">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <h2 class="topbar-title" id="topbar-title">Statistiques</h2>
+      <div class="topbar-right">
+        <span class="topbar-user" id="topbar-user"></span>
+      </div>
+    </header>
+
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
