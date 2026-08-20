@@ -25,6 +25,7 @@ function initDatabase() {
       time TEXT NOT NULL,
       title TEXT NOT NULL,
       icon TEXT DEFAULT 'event',
+      image TEXT,
       description TEXT,
       sort_order INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -112,6 +113,12 @@ function initDatabase() {
       visited_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
+
+  // Migration: add image column to programme if missing
+  const programmeCols = db.prepare("PRAGMA table_info(programme)").all();
+  if (!programmeCols.some(c => c.name === 'image')) {
+    db.exec("ALTER TABLE programme ADD COLUMN image TEXT");
+  }
 
   return db;
 }

@@ -25,6 +25,7 @@ const contactsPublicRoutes = require('./routes/contacts-public');
 const partnersRoutes = require('./routes/partners');
 const faqRoutes = require('./routes/faq');
 const statsRoutes = require('./routes/stats');
+const uploadRoutes = require('./routes/upload');
 
 app.use('/api/auth', authRoutes(db));
 app.use('/api/programme', programmeRoutes(db));
@@ -35,6 +36,7 @@ app.use('/api/admin/contacts', authMiddleware, contactsRoutes(db));
 app.use('/api/partners', partnersRoutes(db));
 app.use('/api/faq', faqRoutes(db));
 app.use('/api/stats', authMiddleware, statsRoutes(db));
+app.use('/api/upload', authMiddleware, uploadRoutes(db));
 
 app.use('/dashboard', express.static(path.join(__dirname, '..', 'dashboard')));
 

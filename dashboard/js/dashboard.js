@@ -170,9 +170,10 @@
     for (const [day, items] of Object.entries(days)) {
       if (items.length) {
         tableHTML += `
-          <tr><td colspan="5" style="font-weight:700;text-transform:uppercase;color:var(--yellow);background:var(--bg-input);">${day}</td></tr>
+          <tr><td colspan="6" style="font-weight:700;text-transform:uppercase;color:var(--yellow);background:var(--bg-input);">${day}</td></tr>
           ${items.map(e => `
             <tr>
+              <td>${e.image ? `<img src="/${e.image}" class="table-thumb" alt="${esc(e.title)}"/>` : '<span class="material-symbols-outlined" style="opacity:0.3;font-size:1.5rem;">image</span>'}</td>
               <td>${esc(e.time)}</td>
               <td><span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;margin-right:0.3rem;">${e.icon}</span>${esc(e.title)}</td>
               <td>${esc(e.description || '-')}</td>
@@ -194,7 +195,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Horaires</th><th>Événement</th><th>Description</th><th>Ordre</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Image</th><th>Horaires</th><th>Événement</th><th>Description</th><th>Ordre</th><th>Actions</th></tr></thead>
           <tbody>${tableHTML}</tbody>
         </table>
       </div>
@@ -211,18 +212,21 @@
       <input class="form-input" id="m-title" placeholder="Titre" required/>
       <label>Icône</label>
       <input class="form-input" id="m-icon" placeholder="event" value="event"/>
+      ${imageUploadField('', 'm-image')}
       <label>Description</label>
       <input class="form-input" id="m-desc" placeholder="Description"/>
       <label>Ordre</label>
       <input class="form-input" id="m-order" type="number" value="0"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api('/programme', { method: 'POST', body: JSON.stringify({
         day: $('#m-day').value, time: $('#m-time').value, title: $('#m-title').value,
-        icon: $('#m-icon').value, description: $('#m-desc').value, sort_order: Number($('#m-order').value)
+        icon: $('#m-icon').value, image, description: $('#m-desc').value, sort_order: Number($('#m-order').value)
       })});
       closeModal();
       renderProgramme();
     });
+    bindImagePreview('m-image');
   };
 
   window.editProgramme = async (id) => {
@@ -237,18 +241,21 @@
       <input class="form-input" id="m-title" value="${esc(e.title)}"/>
       <label>Icône</label>
       <input class="form-input" id="m-icon" value="${esc(e.icon)}"/>
+      ${imageUploadField(e.image || '', 'm-image')}
       <label>Description</label>
       <input class="form-input" id="m-desc" value="${esc(e.description || '')}"/>
       <label>Ordre</label>
       <input class="form-input" id="m-order" type="number" value="${e.sort_order}"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api(`/programme/${id}`, { method: 'PUT', body: JSON.stringify({
         day: $('#m-day').value, time: $('#m-time').value, title: $('#m-title').value,
-        icon: $('#m-icon').value, description: $('#m-desc').value, sort_order: Number($('#m-order').value)
+        icon: $('#m-icon').value, image, description: $('#m-desc').value, sort_order: Number($('#m-order').value)
       })});
       closeModal();
       renderProgramme();
     });
+    bindImagePreview('m-image');
   };
 
   window.deleteProgramme = async (id) => {
@@ -269,10 +276,11 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Nom</th><th>Discipline</th><th>Catégorie</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Image</th><th>Nom</th><th>Discipline</th><th>Catégorie</th><th>Actions</th></tr></thead>
           <tbody>
             ${artists.map(a => `
               <tr>
+                <td>${a.image ? `<img src="/${a.image}" class="table-thumb" alt="${esc(a.name)}"/>` : '<span class="material-symbols-outlined" style="opacity:0.3;font-size:1.5rem;">image</span>'}</td>
                 <td style="font-weight:600;">${esc(a.name)}</td>
                 <td>${esc(a.discipline || '-')}</td>
                 <td><span class="badge badge-${a.category==='musique'?'green':a.category==='mode'?'yellow':'red'}">${a.category}</span></td>
@@ -296,20 +304,21 @@
       <input class="form-input" id="m-discipline"/>
       <label>Catégorie</label>
       <select id="m-category"><option value="musique">Musique</option><option value="mode">Mode & Sape</option><option value="art">Art Lumière</option></select>
-      <label>Image (chemin)</label>
-      <input class="form-input" id="m-image" placeholder="assets/images/artists/..."/>
+      ${imageUploadField('', 'm-image')}
       <label>Bio</label>
       <input class="form-input" id="m-bio"/>
       <label>Instagram</label>
       <input class="form-input" id="m-insta"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api('/artists', { method: 'POST', body: JSON.stringify({
         name: $('#m-name').value, discipline: $('#m-discipline').value, category: $('#m-category').value,
-        image: $('#m-image').value, bio: $('#m-bio').value, social_instagram: $('#m-insta').value || null
+        image, bio: $('#m-bio').value, social_instagram: $('#m-insta').value || null
       })});
       closeModal();
       renderArtists();
     });
+    bindImagePreview('m-image');
   };
 
   window.editArtist = async (id) => {
@@ -322,20 +331,21 @@
       <input class="form-input" id="m-discipline" value="${esc(a.discipline || '')}"/>
       <label>Catégorie</label>
       <select id="m-category"><option value="musique" ${a.category==='musique'?'selected':''}>Musique</option><option value="mode" ${a.category==='mode'?'selected':''}>Mode & Sape</option><option value="art" ${a.category==='art'?'selected':''}>Art Lumière</option></select>
-      <label>Image</label>
-      <input class="form-input" id="m-image" value="${esc(a.image || '')}"/>
+      ${imageUploadField(a.image || '', 'm-image')}
       <label>Bio</label>
       <input class="form-input" id="m-bio" value="${esc(a.bio || '')}"/>
       <label>Instagram</label>
       <input class="form-input" id="m-insta" value="${esc(a.social_instagram || '')}"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api(`/artists/${id}`, { method: 'PUT', body: JSON.stringify({
         name: $('#m-name').value, discipline: $('#m-discipline').value, category: $('#m-category').value,
-        image: $('#m-image').value, bio: $('#m-bio').value, social_instagram: $('#m-insta').value || null
+        image, bio: $('#m-bio').value, social_instagram: $('#m-insta').value || null
       })});
       closeModal();
       renderArtists();
     });
+    bindImagePreview('m-image');
   };
 
   window.deleteArtist = async (id) => {
@@ -481,12 +491,12 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Nom</th><th>Image</th><th>Site</th><th>Ordre</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Image</th><th>Nom</th><th>Site</th><th>Ordre</th><th>Actions</th></tr></thead>
           <tbody>
             ${partners.map(p => `
               <tr>
+                <td>${p.image ? `<img src="/${p.image}" class="table-thumb" alt="${esc(p.name)}"/>` : '<span class="material-symbols-outlined" style="opacity:0.3;font-size:1.5rem;">image</span>'}</td>
                 <td style="font-weight:600;">${esc(p.name)}</td>
-                <td>${esc(p.image || '-')}</td>
                 <td>${p.website ? `<a href="${esc(p.website)}" target="_blank" style="color:var(--green-light);">Lien</a>` : '-'}</td>
                 <td>${p.sort_order}</td>
                 <td class="table-actions">
@@ -505,20 +515,21 @@
     openModal('Ajouter un partenaire', `
       <label>Nom</label>
       <input class="form-input" id="m-name" required/>
-      <label>Image (chemin)</label>
-      <input class="form-input" id="m-image" placeholder="assets/images/parteners/..."/>
+      ${imageUploadField('', 'm-image')}
       <label>Site web</label>
       <input class="form-input" id="m-website" placeholder="https://..."/>
       <label>Ordre</label>
       <input class="form-input" id="m-order" type="number" value="0"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api('/partners', { method: 'POST', body: JSON.stringify({
-        name: $('#m-name').value, image: $('#m-image').value,
+        name: $('#m-name').value, image,
         website: $('#m-website').value, sort_order: Number($('#m-order').value)
       })});
       closeModal();
       renderPartners();
     });
+    bindImagePreview('m-image');
   };
 
   window.editPartner = async (id) => {
@@ -527,20 +538,21 @@
     openModal('Modifier le partenaire', `
       <label>Nom</label>
       <input class="form-input" id="m-name" value="${esc(p.name)}"/>
-      <label>Image</label>
-      <input class="form-input" id="m-image" value="${esc(p.image || '')}"/>
+      ${imageUploadField(p.image || '', 'm-image')}
       <label>Site web</label>
       <input class="form-input" id="m-website" value="${esc(p.website || '')}"/>
       <label>Ordre</label>
       <input class="form-input" id="m-order" type="number" value="${p.sort_order}"/>
     `, async () => {
+      const image = await uploadIfSelected('m-image');
       await api(`/partners/${id}`, { method: 'PUT', body: JSON.stringify({
-        name: $('#m-name').value, image: $('#m-image').value,
+        name: $('#m-name').value, image,
         website: $('#m-website').value, sort_order: Number($('#m-order').value)
       })});
       closeModal();
       renderPartners();
     });
+    bindImagePreview('m-image');
   };
 
   window.deletePartner = async (id) => {
@@ -665,6 +677,60 @@
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`${API}/api/upload`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` },
+      body: formData
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.path;
+  }
+
+  function imageUploadField(currentImage = '', id = 'm-image') {
+    const preview = currentImage ? `<img src="/${currentImage}" class="image-preview" alt="Aperçu"/>` : '';
+    return `
+      <label>Image</label>
+      <div class="image-upload-area">
+        <div class="image-preview-wrap" id="${id}-preview">${preview}</div>
+        <input type="file" id="${id}-file" accept="image/*" class="image-input"/>
+        <label for="${id}-file" class="image-upload-btn">
+          <span class="material-symbols-outlined">upload</span> Choisir une image
+        </label>
+        <input type="hidden" id="${id}" value="${esc(currentImage)}"/>
+      </div>
+    `;
+  }
+
+  function bindImagePreview(id) {
+    const fileInput = $(`#${id}-file`);
+    const hiddenInput = $(`#${id}`);
+    const previewWrap = $(`#${id}-preview`);
+    if (!fileInput) return;
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewWrap.innerHTML = `<img src="${e.target.result}" class="image-preview" alt="Aperçu"/>`;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function uploadIfSelected(id) {
+    const fileInput = $(`#${id}-file`);
+    const hiddenInput = $(`#${id}`);
+    if (fileInput && fileInput.files[0]) {
+      const path = await uploadImage(fileInput.files[0]);
+      if (path) hiddenInput.value = path;
+    }
+    return hiddenInput.value;
   }
 
   /* ── INIT ── */
