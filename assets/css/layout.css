@@ -1460,6 +1460,15 @@
 }
 
 /* ── Animations ── */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

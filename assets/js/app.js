@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 800,
     easing: 'ease-out-cubic',
     once: true,
-    offset: 50
+    offset: 100,
+    disable: false
   });
 
   /* ═══════════════════════════════════════
