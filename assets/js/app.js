@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 50
+  });
+
   /* ═══════════════════════════════════════
      RENDER PROGRAMME
      ═══════════════════════════════════════ */

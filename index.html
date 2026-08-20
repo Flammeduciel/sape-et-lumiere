@@ -40,6 +40,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/css/main.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
 </head>
 <body>
 
@@ -92,7 +93,7 @@
   <div class="hero-overlay"></div>
   <div class="hero-bg" style="background-image: url('./assets/images/hero-background.png')"></div>
   <div class="hero-content">
-    <div class="hero-text">
+    <div class="hero-text" data-aos="fade-up" data-aos-delay="100">
       <span class="hero-date">DU 18 AU 20 SEPTEMBRE 2026</span>
       <h1 class="hero-title">
         <span class="white">FESTIVAL</span>
@@ -138,15 +139,15 @@
 <section class="section programme" id="programme">
   <div class="programme-bg" style="background-image: url('https://picsum.photos/seed/african-pattern/1000/1000')"></div>
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-aos="fade-up">
       <span class="badge badge-red">LE PROGRAMME</span>
       <h2 class="section-title">3 JOURS D'EXCEPTION</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="programme-tabs" id="programme-tabs"></div>
+    <div class="programme-tabs" id="programme-tabs" data-aos="fade-up" data-aos-delay="100"></div>
 
-    <div class="card-white programme-card">
+    <div class="card-white programme-card" data-aos="fade-up" data-aos-delay="200">
       <div class="programme-card-img">
         <img id="programme-img" src="" alt="Programme du jour"/>
       </div>
@@ -160,14 +161,14 @@
 <!-- ═══════════════ LINE-UP ═══════════════ -->
 <section class="section artists" id="line-up">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-aos="fade-up">
       <span class="badge badge-red" style="background:transparent;color:var(--festival-red);border:1px solid var(--festival-red);">LINE-UP</span>
       <h2 class="section-title section-title-white">NOS ARTISTES & CRÉATEURS</h2>
     </div>
 
-    <div class="artist-filters" id="artist-filters"></div>
+    <div class="artist-filters" id="artist-filters" data-aos="fade-up" data-aos-delay="100"></div>
 
-    <div class="artists-grid" id="artists-grid"></div>
+    <div class="artists-grid" id="artists-grid" data-aos="fade-up" data-aos-delay="200"></div>
   </div>
 </section>
 
@@ -175,7 +176,7 @@
 <section class="billetterie" id="billetterie">
   <div class="container">
     <div class="billetterie-inner">
-      <div class="billetterie-left">
+      <div class="billetterie-left" data-aos="fade-right">
         <div class="billetterie-header">
           <h2 class="billetterie-title">BILLETTERIE</h2>
           <p class="billetterie-subtitle">Choisissez votre formule</p>
@@ -189,7 +190,7 @@
         </div>
       </div>
 
-      <div class="billetterie-right">
+      <div class="billetterie-right" data-aos="fade-left" data-aos-delay="200">
         <img class="billetterie-img" src="assets/images/sapeurs.png" alt="Personnage élégant"/>
         <div class="billetterie-features" id="billetterie-features"></div>
       </div>
@@ -200,43 +201,43 @@
 <!-- ═══════════════ INFOS PRATIQUES ═══════════════ -->
 <section class="section infos-pratiques" id="infos-pratiques">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-aos="fade-up">
       <span class="badge badge-red">INFOS PRATIQUES</span>
       <h2 class="section-title">PRÉPAREZ VOTRE VENUE</h2>
       <div class="section-divider"></div>
     </div>
-    <div class="pratique-grid" id="pratique-grid"></div>
+    <div class="pratique-grid" id="pratique-grid" data-aos="fade-up" data-aos-delay="100"></div>
   </div>
 </section>
 
 <!-- ═══════════════ PARTENAIRES ═══════════════ -->
 <section class="section partenaires" id="partenaires">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-aos="fade-up">
       <span class="badge badge-red">PARTENAIRES</span>
       <h2 class="section-title">ILS SOUTIENNENT LE FESTIVAL</h2>
       <div class="section-divider"></div>
     </div>
-    <div class="partners-grid" id="partners-grid"></div>
+    <div class="partners-grid" id="partners-grid" data-aos="fade-up" data-aos-delay="100"></div>
   </div>
 </section>
 
 <!-- ═══════════════ FAQ + CONTACT ═══════════════ -->
 <div class="faq-contact" id="faq">
   <div class="faq-section">
-    <div class="faq-section-header">
+    <div class="faq-section-header" data-aos="fade-up">
       <h2 class="faq-section-title">FAQ</h2>
       <p class="faq-section-subtitle">Réponses aux questions fréquentes</p>
     </div>
-    <div class="faq-list" id="faq-list"></div>
+    <div class="faq-list" id="faq-list" data-aos="fade-up" data-aos-delay="100"></div>
   </div>
 
   <div class="contact-section" id="contact">
-    <div class="contact-section-header">
+    <div class="contact-section-header" data-aos="fade-up">
       <h2 class="contact-section-title">CONTACT</h2>
       <p class="contact-section-subtitle">Une question ? Écrivez-nous</p>
     </div>
-    <form class="contact-form" id="contact-form" novalidate>
+    <form class="contact-form" id="contact-form" novalidate data-aos="fade-up" data-aos-delay="100">
       <div class="contact-form-row">
         <div class="contact-field">
           <input class="form-input" type="text" id="contact-name" name="name" placeholder="Nom complet *" required/>
@@ -280,7 +281,7 @@
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
-  <div class="footer-grid">
+  <div class="footer-grid" data-aos="fade-up">
     <div class="footer-brand">
       <a class="nav-logo" href="#" style="font-size:1rem;">SAPE &amp; LUMIÈRE</a>
       <p class="footer-desc">Le Festival Sape &amp; Lumière célèbre l'élégance et la créativité congolaise à travers la musique, la mode et la lumière.</p>
@@ -328,6 +329,7 @@
 </footer>
 
 <script src="assets/js/data.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
