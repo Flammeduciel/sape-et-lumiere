@@ -426,7 +426,7 @@
 
   /* ── CONTACTS ── */
   async function renderContacts() {
-    const contacts = await api('/contacts');
+    const contacts = await api('/admin/contacts');
     if (!contacts) return;
 
     $('#content').innerHTML = `
@@ -459,13 +459,13 @@
   }
 
   window.markRead = async (id) => {
-    await api(`/contacts/${id}/read`, { method: 'PUT' });
+    await api(`/admin/contacts/${id}/read`, { method: 'PUT' });
     renderContacts();
   };
 
   window.deleteContact = async (id) => {
     if (!confirm('Supprimer ce message ?')) return;
-    await api(`/contacts/${id}`, { method: 'DELETE' });
+    await api(`/admin/contacts/${id}`, { method: 'DELETE' });
     renderContacts();
   };
 

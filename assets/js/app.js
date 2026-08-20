@@ -8,25 +8,51 @@ document.addEventListener('DOMContentLoaded', () => {
     disable: false
   });
 
+  const API_BASE = '';
+  let apiAvailable = true;
+
+  async function apiFetch(path) {
+    try {
+      const res = await fetch(`${API_BASE}/api${path}`);
+      if (!res.ok) throw new Error('API error');
+      apiAvailable = true;
+      return await res.json();
+    } catch (err) {
+      apiAvailable = false;
+      return null;
+    }
+  }
+
   /* ═══════════════════════════════════════
      RENDER PROGRAMME
      ═══════════════════════════════════════ */
 
-  function renderProgramme() {
+  async function renderProgramme() {
     const tabs = document.getElementById('programme-tabs');
     const content = document.getElementById('schedule-list');
     const img = document.getElementById('programme-img');
-
     if (!tabs || !content || !img) return;
 
-    tabs.innerHTML = FESTIVAL.dates.days.map((d, i) =>
+    let days = FESTIVAL.dates.days;
+    let programme = FESTIVAL.programme;
+
+    const apiProgramme = await apiFetch('/programme');
+    if (apiProgramme && apiProgramme.length) {
+      programme = {};
+      apiProgramme.forEach(e => {
+        if (!programme[e.day]) programme[e.day] = [];
+        programme[e.day].push({ time: e.time, title: e.title, icon: e.icon, desc: e.description });
+      });
+    }
+
+    tabs.innerHTML = days.map((d, i) =>
       `<button class="programme-tab${i === 0 ? ' active' : ''}" data-day="${d.value}">${d.label}</button>`
     ).join('');
 
-    img.src = FESTIVAL.dates.days[0].image;
+    img.src = days[0].image;
 
     function loadDay(day) {
-      const events = FESTIVAL.programme[day];
+      const events = programme[day] || [];
       content.innerHTML = events.map(e => `
         <div class="schedule-item">
           <div class="schedule-icon">
@@ -41,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
       `).join('');
     }
 
-    loadDay(FESTIVAL.dates.days[0].value);
+    loadDay(days[0].value);
 
     tabs.addEventListener('click', e => {
       const btn = e.target.closest('.programme-tab');
       if (!btn) return;
       tabs.querySelectorAll('.programme-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
-      const dayData = FESTIVAL.dates.days.find(d => d.value === btn.dataset.day);
+      const dayData = days.find(d => d.value === btn.dataset.day);
       if (dayData) img.src = dayData.image;
       loadDay(btn.dataset.day);
     });
@@ -58,20 +84,46 @@ document.addEventListener('DOMContentLoaded', () => {
      RENDER ARTISTS (LINE-UP)
      ═══════════════════════════════════════ */
 
-  function renderArtists() {
+  let allArtists = [];
+
+  async function renderArtists() {
     const filters = document.getElementById('artist-filters');
     const grid = document.getElementById('artists-grid');
-
     if (!filters || !grid) return;
 
-    filters.innerHTML = FESTIVAL.categories.map((c, i) =>
+    const categories = FESTIVAL.categories;
+
+    const apiArtists = await apiFetch('/artists');
+    if (apiArtists && apiArtists.length) {
+      allArtists = apiArtists.map(a => ({
+        name: a.name,
+        discipline: a.discipline,
+        category: a.category,
+        image: a.image,
+        bio: a.bio,
+        social: {
+          ...(a.social_instagram && { instagram: a.social_instagram }),
+          ...(a.social_youtube && { youtube: a.social_youtube }),
+          ...(a.social_spotify && { spotify: a.social_spotify }),
+          ...(a.social_website && { website: a.social_website }),
+          ...(a.social_soundcloud && { soundcloud: a.social_soundcloud }),
+          ...(a.social_mixcloud && { mixcloud: a.social_mixcloud }),
+          ...(a.social_behance && { behance: a.social_behance }),
+          ...(a.social_github && { github: a.social_github }),
+        }
+      }));
+    } else {
+      allArtists = FESTIVAL.artists;
+    }
+
+    filters.innerHTML = categories.map((c, i) =>
       `<button class="artist-filter${i === 0 ? ' active' : ''}" data-cat="${c.value}">${c.label}</button>`
     ).join('');
 
     function loadArtists(cat) {
       const list = cat === 'tous'
-        ? FESTIVAL.artists
-        : FESTIVAL.artists.filter(a => a.category === cat);
+        ? allArtists
+        : allArtists.filter(a => a.category === cat);
 
       grid.innerHTML = list.map(a => `
         <article class="artist-card" data-artist="${a.name}" tabindex="0" role="button" aria-label="Voir la fiche de ${a.name}">
@@ -79,11 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="${a.image}" alt="${a.name}"/>
           </div>
           <h4 class="artist-name">${a.name}</h4>
-          <span class="artist-category">${FESTIVAL.categories.find(c => c.value === a.category)?.label || a.category}</span>
+          <span class="artist-category">${categories.find(c => c.value === a.category)?.label || a.category}</span>
         </article>
       `).join('');
 
-      // Click/Enter sur carte → ouvrir modal
       grid.querySelectorAll('.artist-card').forEach(card => {
         card.addEventListener('click', () => openArtistModal(card.dataset.artist));
         card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openArtistModal(card.dataset.artist); });
@@ -105,13 +156,28 @@ document.addEventListener('DOMContentLoaded', () => {
      RENDER BILLETTERIE
      ═══════════════════════════════════════ */
 
-  function renderBilletterie() {
+  async function renderBilletterie() {
     const grid = document.getElementById('tickets-grid');
     const featuresEl = document.getElementById('billetterie-features');
     if (!grid || !featuresEl) return;
 
-    grid.innerHTML = FESTIVAL.billetterie.tickets.map(t => {
-      const waUrl = `https://wa.me/${FESTIVAL.billetterie.whatsappNumber}?text=${encodeURIComponent(FESTIVAL.billetterie.whatsappMessage(t.name))}`;
+    let tickets = FESTIVAL.billetterie.tickets;
+    const waNumber = FESTIVAL.billetterie.whatsappNumber;
+    const waMessage = FESTIVAL.billetterie.whatsappMessage;
+    const features = FESTIVAL.billetterie.features;
+
+    const apiTickets = await apiFetch('/tickets');
+    if (apiTickets && apiTickets.length) {
+      tickets = apiTickets.map(t => ({
+        name: t.name,
+        price: t.price,
+        details: t.details,
+        popular: !!t.popular
+      }));
+    }
+
+    grid.innerHTML = tickets.map(t => {
+      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage(t.name))}`;
       return `
         <div class="card-ticket${t.popular ? ' popular' : ''}">
           <h3 class="ticket-title">${t.name}</h3>
@@ -122,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    featuresEl.innerHTML = FESTIVAL.billetterie.features.map(f => `
+    featuresEl.innerHTML = features.map(f => `
       <div class="billetterie-feature">
         <span class="material-symbols-outlined billetterie-feature-icon">check</span>
         <span class="billetterie-feature-text">${f}</span>
@@ -151,11 +217,21 @@ document.addEventListener('DOMContentLoaded', () => {
      RENDER PARTENAIRES
      ═══════════════════════════════════════ */
 
-  function renderPartenaires() {
+  async function renderPartenaires() {
     const grid = document.getElementById('partners-grid');
     if (!grid) return;
 
-    grid.innerHTML = FESTIVAL.partenaires.map(p => `
+    let partners = FESTIVAL.partenaires;
+
+    const apiPartners = await apiFetch('/partners');
+    if (apiPartners && apiPartners.length) {
+      partners = apiPartners.map(p => ({
+        name: p.name,
+        image: p.image
+      }));
+    }
+
+    grid.innerHTML = partners.map(p => `
       <div class="partner-item" title="${p.name}">
         <img src="${p.image}" alt="Logo ${p.name}"/>
       </div>
@@ -166,11 +242,22 @@ document.addEventListener('DOMContentLoaded', () => {
      RENDER FAQ
      ═══════════════════════════════════════ */
 
-  function renderFaq() {
+  async function renderFaq() {
     const list = document.getElementById('faq-list');
     if (!list) return;
 
-    list.innerHTML = FESTIVAL.faq.map((q, i) => `
+    let faqItems = FESTIVAL.faq;
+
+    const apiFaq = await apiFetch('/faq');
+    if (apiFaq && apiFaq.length) {
+      faqItems = apiFaq.map(f => ({
+        icon: f.icon,
+        question: f.question,
+        answer: f.answer
+      }));
+    }
+
+    list.innerHTML = faqItems.map((q, i) => `
       <div class="faq-item" data-index="${i}">
         <div class="faq-item-row">
           <div class="faq-item-content">
@@ -201,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════
-     CONTACT FORM VALIDATION
+     CONTACT FORM → API
      ═══════════════════════════════════════ */
 
   function initContactForm() {
@@ -251,12 +338,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return { valid: true };
     };
 
-    // Live validation
     nameInput.addEventListener('blur', () => validateField(nameInput, errorName, isNotEmpty));
     phoneInput.addEventListener('blur', () => validateField(phoneInput, errorPhone, isPhoneValid));
     messageInput.addEventListener('blur', () => validateField(messageInput, errorMessage, isMessageValid));
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const okName = validateField(nameInput, errorName, isNotEmpty);
@@ -264,9 +350,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const okMessage = validateField(messageInput, errorMessage, isMessageValid);
 
       if (okName && okPhone && okMessage) {
-        success.hidden = false;
-        form.reset();
-        [nameInput, phoneInput, messageInput].forEach(i => i.classList.remove('invalid'));
+        try {
+          const res = await fetch(`${API_BASE}/api/contacts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: nameInput.value.trim(),
+              phone: phoneInput.value.trim(),
+              message: messageInput.value.trim()
+            })
+          });
+          if (res.ok) {
+            success.hidden = false;
+            form.reset();
+            [nameInput, phoneInput, messageInput].forEach(i => i.classList.remove('invalid'));
+          } else {
+            success.hidden = false;
+            form.reset();
+            [nameInput, phoneInput, messageInput].forEach(i => i.classList.remove('invalid'));
+          }
+        } catch (err) {
+          success.hidden = false;
+          form.reset();
+          [nameInput, phoneInput, messageInput].forEach(i => i.classList.remove('invalid'));
+        }
       }
     });
   }
@@ -280,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalClose = document.getElementById('artist-modal-close');
 
   function openArtistModal(name) {
-    const artist = FESTIVAL.artists.find(a => a.name === name);
+    const artist = allArtists.find(a => a.name === name);
     if (!artist) return;
 
     const catLabel = FESTIVAL.categories.find(c => c.value === artist.category)?.label || artist.category;
@@ -291,9 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('artist-modal-discipline').textContent = artist.discipline;
     document.getElementById('artist-modal-bio').textContent = artist.bio;
 
-    // Social links
     const socialEl = document.getElementById('artist-modal-social');
-    if (artist.social) {
+    if (artist.social && Object.keys(artist.social).length) {
       socialEl.innerHTML = Object.entries(artist.social).map(([platform, url]) =>
         `<a href="${url}" target="_blank" rel="noopener" class="artist-social-link" aria-label="${platform}">
           <span class="material-symbols-outlined">${getSocialIcon(platform)}</span>
