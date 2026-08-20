@@ -194,12 +194,12 @@ function seedDatabase(db) {
   if (partnersExists.count === 0) {
     const insert = db.prepare('INSERT INTO partners (name, image, sort_order) VALUES (?, ?, ?)');
     const partners = [
-      ['Akieni', 'assets/images/parteners/akieni.svg', 1],
-      ['Airtel', 'assets/images/parteners/airtel.svg', 2],
-      ['MTN', 'assets/images/parteners/mtn.svg', 3],
-      ['Canal+', 'assets/images/parteners/canal_plus.svg', 4],
-      ['Total', 'assets/images/parteners/total.svg', 5],
-      ['ENI', 'assets/images/parteners/eni.svg', 6],
+      ['Akieni Academy', 'assets/images/parteners/akieni.jpeg', null, 1],
+      ['Airtel Congo', 'assets/images/parteners/airtel.jpeg', null, 2],
+      ['MTN Congo', 'assets/images/parteners/mtn.jpeg', null, 3],
+      ['Canal+', 'assets/images/parteners/canal_plus.jpeg', null, 4],
+      ['TotalEnergies', 'assets/images/parteners/total.svg', null, 5],
+      ['ENI Congo', 'assets/images/parteners/eni_congo.jpg', null, 6],
     ];
     const insertMany = db.transaction((list) => {
       for (const p of list) insert.run(...p);
