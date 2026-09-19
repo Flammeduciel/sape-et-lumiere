@@ -7,8 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateCountdown() {
     const target = new Date(FESTIVAL.dates.opening).getTime();
     const now = Date.now();
-    let diff = target - now;
-    if (diff < 0) diff = 0;
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      clearInterval(countdownInterval);
+      showStartedLabel();
+      return;
+    }
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -21,7 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
   }
 
+  const countdownInterval = setInterval(updateCountdown, 1000);
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+
+  function showStartedLabel() {
+    const inner = document.querySelector('.countdown-inner');
+    if (inner && !document.querySelector('.countdown-finished')) {
+      inner.insertAdjacentHTML('beforeend', `<span class="countdown-finished">${FESTIVAL.dates.startedLabel}</span>`);
+    }
+  }
 
 });

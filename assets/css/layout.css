@@ -168,6 +168,19 @@
   margin-top: 0.15rem;
 }
 
+.countdown-finished {
+  font-family: var(--font-headline);
+  font-size: var(--fs-body-lg);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--festival-yellow);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
 /* ═══════════════════════════════════════
    FEATURES BAND
    ═══════════════════════════════════════ */
